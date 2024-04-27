@@ -3,23 +3,19 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException{
-        Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
-        String s = sc.next();
-        double sum = 0;
-        for(int i = 0 ; i < N ; i++){
-            double abc = transform(s.charAt(i)); 
-            // System.out.println("변환값 : " + abc);
-            sum += (double) ( abc * Math.pow(31, i));
-            // System.out.println(" 31의 " + i + "승 값 : " + Math.pow(31, i));
-            // System.out.println("각항의 값" + (double) ( abc * Math.pow(31, i)));
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int length = Integer.parseInt(br.readLine());
+        int r = 31;
+        int m = 1234567891;
+        long sum = 0;
+        long mod = 1;
+        char[] ch = br.readLine().toCharArray();
+
+        for(int i = 0; i < length; i++) {
+
+            sum += (((int)((ch[i] - 'a') + 1)) * mod);
+            mod = (r * mod) % m;
         }
-        System.out.println((int)sum);
-
-        }
-
-        public static int transform(int n){
-
-            return n-'a'+1;
+        System.out.println(sum % m);
         }
     }
