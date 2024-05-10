@@ -1,5 +1,5 @@
-select book_id, to_char(published_date,'yyyy-mm-dd') as published_date
-from book
-where category = '인문'
-and to_char(published_date,'yyyy') = '2021'
-order by published_date asc
+SELECT BOOK_ID, DATE_Format(PUBLISHED_DATE, '%Y-%m-%d') as PUBLISHED_DATE
+FROM BOOK
+WHERE PUBLISHED_DATE LIKE '%2021%'
+AND CATEGORY LIKE '%인문%'
+ORDER BY PUBLISHED_DATE ASC;
