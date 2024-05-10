@@ -1,7 +1,6 @@
-select  ugb.title, ugb.board_id, ugr.reply_id, ugr.writer_id, ugr.contents, 
-        to_char(ugr.created_date, 'yyyy-mm-dd') as created_date
-from used_goods_board ugb
-join used_goods_reply ugr on ugb.board_id = ugr.board_id
-where to_char(ugb.created_date,'yyyy-mm') like '2022-10%'
-order by ugr.created_date, ugb.title
-;
+SELECT B.TITLE, B.BOARD_ID, R.REPLY_ID, R.WRITER_ID, R.CONTENTS, 
+        DATE_FORMAT(R.CREATED_DATE,'%Y-%m-%d') as CREATED_DATE
+FROM USED_GOODS_BOARD B
+JOIN USED_GOODS_REPLY R ON B.BOARD_ID = R.BOARD_ID
+WHERE B.CREATED_DATE LIKE '%2022-10%'
+ORDER BY 6 ASC, 1 ASC;
