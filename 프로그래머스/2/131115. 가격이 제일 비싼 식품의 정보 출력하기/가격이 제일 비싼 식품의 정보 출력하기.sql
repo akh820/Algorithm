@@ -1,6 +1,5 @@
--- 코드를 입력하세요
 SELECT *
-from food_product
-order by price desc
-fetch first 1 row only
+FROM food_producT
+ORDER BY price desc
+LIMIT 1
 ;
