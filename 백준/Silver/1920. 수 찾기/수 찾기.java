@@ -1,38 +1,59 @@
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
 
 public class Main {
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public static int[] arr;
 
-        // 첫 번째 리스트의 길이 N을 입력받습니다.
-        int N = Integer.parseInt(sc.nextLine());
-        Set<Integer> set = new HashSet<>();
+    public static void main (String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+        arr = new int[N];
 
-        // 첫 번째 리스트의 N개의 정수를 입력받습니다.
-        for (int i = 0; i < N; i++) {
-            int temp = Integer.parseInt(sc.next());
-            set.add(temp);
+        StringTokenizer st = new StringTokenizer(br.readLine()," ");
+        for(int i = 0 ; i < N ; i++){
+            arr[i] = Integer.parseInt(st.nextToken());
         }
-        // 다음 입력을 받기 위해 줄바꿈 문자를 소비합니다.
-        sc.nextLine();
+        //이분탐색법을 사용하기 위해 한번 정렬
+        Arrays.sort(arr);
 
-        // 두 번째 리스트의 길이 M을 입력받습니다.
-        int M = Integer.parseInt(sc.nextLine());
+        int M = Integer.parseInt(br.readLine());
 
-        // 두 번째 리스트의 M개의 정수를 입력받습니다.
-        for (int i = 0; i < M; i++) {
-            int temp = Integer.parseInt(sc.next());
-            if (set.contains(temp)) {
-                System.out.println("1");
+        st = new StringTokenizer(br.readLine()," ");
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0 ; i < M ; i++){
+
+            if(binarySearch(Integer.parseInt(st.nextToken())) >= 0){
+                sb.append("1").append('\n');
             } else {
-                System.out.println("0");
+                sb.append("0").append('\n');
+            }
+
+        }
+        System.out.println(sb);
+    }
+
+    public static int binarySearch(int value){
+
+        int low = 0;
+        int high = arr.length - 1;
+
+
+        while(low <= high){
+
+            int mid = (low + high)/2;
+
+            if( value < arr[mid] ){
+                high = mid -1;
+            }
+            else if( value > arr[mid] ){
+                low = mid + 1;
+            } else {
+                return mid;
             }
         }
-
-        // Scanner 객체를 닫습니다.
-        sc.close();
+        return -1;
     }
 }
