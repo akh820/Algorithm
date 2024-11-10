@@ -1,27 +1,14 @@
 class Solution {
     public int[] solution(int[] numbers, String direction) {
-        int[] a = new int[numbers.length];
+        int len = numbers.length; // len 3이라고 가정
+        int[] a = new int[len];
+        for( int i = 0; i < len; i++ ){
             if(direction.equals("left")){
-                int count = 0;
-                for(int i = 0; i < numbers.length; i++){
-                    count++;
-                    if( count == numbers.length){
-                        a[i] = numbers[0];
-                    }else {
-                        a[i] = numbers[i+1];    
-                    }
-                }
+                a[i] = numbers[ (i + 1) % len];
             } else {
-                int count = 0;
-                for(int i = 0; i < numbers.length; i++){
-                    count++;
-                    if( count == 1){
-                        a[i] = numbers[numbers.length-1];
-                    }else {
-                        a[i] = numbers[i-1];    
-                    }
-                }
+                a[i] = numbers[ (i - 1 + len) % len];
             }
+        }
         return a;
     }
 }
