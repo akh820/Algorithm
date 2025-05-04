@@ -15,8 +15,9 @@ function solution(N, stages) {
         p -= count;
     }
     let max = Math.max(...answer);
-    answer.sort((a, b) => b.failure - a.failure);
-    const realAnswer = answer.map(obj => obj.index);
+    const realAnswer = answer.sort((a, b) => b.failure - a.failure)
+    .map(obj => obj.index);
+    // const realAnswer = answer.map(obj => obj.index);
     
     return realAnswer;
 }
