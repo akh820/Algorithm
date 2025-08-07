@@ -1,26 +1,25 @@
-function solution(bridge_length, weight, truck_weights) {
+function solution (bridge_length, weight, truck_weights) {
     const going = [];
-    let sum = 0;
-    let answer = 0;
-    while(truck_weights.length > 0){
-        const checkTruck = truck_weights[0];
-        if(going.length !== 0){
+    let time = 0;
+    while(true){
+        // 시간 끝났으면 빼는거
+        if(going.length > 0){
             for(const e of going){
-                e[1]--;
+                e[1] -= 1; 
             }
-            for(const e of going){
-                if(e[1] <= 0){
-                    going.shift();
-                    sum -= e[0];
-                }
+            if(going[0][1] <= 0) going.shift();
+        }
+        // 비어있거나 중량 가능하면 push
+        // 새로 올라올 트럭이 있고,
+        if (truck_weights.length > 0) {
+            const bridgeWeight = going.reduce((acc, cur) => acc + cur[0],               0);
+            // 새로 올릴 트럭을 포함한 무게가 weight 이하라면
+            if (bridgeWeight + truck_weights[0] <= weight) {
+                going.push([truck_weights.shift(), bridge_length]);
             }
         }
-        if(going.length < bridge_length && checkTruck <= (weight - sum)){
-            const current = truck_weights.shift();
-            going.push([current, bridge_length]);
-            sum += current;
-        }
-        answer++;
+        time++;
+        if(going.length <= 0 && truck_weights.length <= 0) break;
     }
-    return answer + bridge_length;
+    return time;
 }
