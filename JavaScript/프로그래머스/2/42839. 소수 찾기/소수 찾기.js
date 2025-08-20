@@ -17,7 +17,7 @@ function solution (numbers) {
         }
         
         for(let i  = 0 ; i < arr.length; i++){
-            const newPrefix = arr[i] + prefix;
+            const newPrefix = prefix + arr[i];
             const remainingNumber = [...arr];
             remainingNumber.splice(i,1);
             createNumberCombination(remainingNumber, newPrefix);
