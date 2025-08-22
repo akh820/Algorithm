@@ -1,14 +1,14 @@
-function solution(number, k) {
+function solution(number, k){
     const stack = [];
-    
-    for (const digit of number) {
-        while (stack.length > 0 && stack[stack.length - 1] < digit && k > 0) {
-            stack.pop(); 
-            k--;         
+        for(let i = 0 ; i < number.length; i++){
+            //11999
+            while(stack.length > 0 && stack[stack.length - 1] < number[i] && k > 0){
+                stack.pop();
+                k--;
+            } // 9
+            stack.push(number[i]); // 11
         }
-        stack.push(digit); 
-    }
     
-    stack.splice(stack.length - k, k);    
+    stack.splice(stack.length - 1, k);
     return stack.join("");
 }
