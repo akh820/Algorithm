@@ -1,5 +1,3 @@
-//width , length, volume;
-
 function solution(brown, yellow) {
     const NumberOfTiles = brown + yellow;
     for(let i = 1; i <= NumberOfTiles; i++){
