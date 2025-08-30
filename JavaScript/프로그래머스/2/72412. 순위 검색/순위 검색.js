@@ -1,56 +1,43 @@
-function solution(info, query){
-    const infoMap = new Map();
+function solution(info, query) {
     const result = [];
-    for(const e of info){
-        const temp = e.split(" ");
-        const value = Number(temp.pop());
-        addMinus(temp, value, 0);
-    }
-    
-    function addMinus(remainList, value, start){
-        
-        const key = remainList.join(" ");
-        
-        if(infoMap.has(key)){
-            infoMap.get(key).push(value);
-        } else {
-            infoMap.set(key, [value]);
+    const infoMap = new Map();
+    const arrangedQuery = [];
+    for(let i = 0 ; i < info.length; i++){
+        const infoArray = info[i].split(" ");
+        // console.log(infoArray, "infoArray");
+        const value = infoArray.slice(infoArray.length - 1, infoArray.length);
+        infoArray.splice(infoArray.length - 1, 1);
+        const key = infoArray.join(" ");
+        // console.log(infoArray, value);
+        let valueList = [];
+        if(infoMap.get(infoArray)){
+            valueList = infoMap.get(infoArray);
         }
-        
-        for(let i = start; i < remainList.length; i++){
-            const tempList = [...remainList];
-            tempList[i] = "-";
-            addMinus(tempList, value, i + 1);
-        }
+        valueList.push(Number(value));
+        infoMap.set(key, valueList);
     }
-    for(const v of infoMap.values()){
-        v.sort((a,b) => a - b);
+    for(const e of query){
+        const queryArray = e.split(" and ");
+        const remaining = queryArray[queryArray.length - 1].split(" ");
+        queryArray.splice(queryArray.length - 1, 1);
+        arrangedQuery.push([...queryArray, ...remaining]);
     }
-    // for(const [k, v] of infoMap.entries()){
-    //     console.log(k, v);
-    // }
-    query.forEach(e => {
-        const temp = e.replace(/ and /g," ").split(" ");
-        const value = Number(temp.pop());
-        const key = temp.join(" ");
-        // console.log(temp);
+    for(const e of arrangedQuery){
+        let count = 0;
+        const score = Number(e.splice(e.length - 1, 1).pop());
+        const key = e.join(" ");
         if(infoMap.has(key)){
-            const valueList = infoMap.get(key);
-            let left = 0;
-            let right = valueList.length;
-            while(left < right){
-                const mid = Math.floor((left + right) / 2);
-                if(valueList[mid] >= value){
-                    right = mid;
-                } else {
-                    left = mid + 1;
-                }
+            const scoreList = infoMap.get(key);
+            for(const sco of scoreList){
+                if(sco >= score) count ++;
             }
-            result.push(valueList.length - left);
-        } else {
-            result.push(0);
         }
-    })
+        result.push(count);
+    }
     
-    return result
+    // for(const [k,v] of infoMap.entries()){
+    //     console.log(k,v);
+    // }
+    // console.log(arrangedQuery);
+    return result;
 }
