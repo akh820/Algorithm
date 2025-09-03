@@ -1,27 +1,31 @@
 function solution(cacheSize, cities) {
+    
+    let time = 0;
+    
     if(cacheSize === 0){
         return cities.length * 5;
     }
     
-    let count = 0;
     const cache = new Map();
     
-    for(const city of cities){
-        const cityLower = city.toLowerCase();
-        if(cache.has(cityLower)){
-            count += 1;
-            cache.delete(cityLower);
-            cache.set(cityLower, true); // value는 상관없음
+    for(const e of cities){
+        const city = e.toLowerCase();
+        if(cache.has(city)){
+            cache.delete(city);
+            cache.set(city, true);
+            time += 1;
         } else {
-            count += 5;
-            if(cache.size >= cacheSize){
+            if(cache.size < cacheSize){
+                cache.set(city, true);
+            } else {
                 const oldestKey = cache.keys().next().value;
                 cache.delete(oldestKey);
+                cache.set(city, true);
             }
-            cache.set(cityLower, true);
+            time += 5;
         }
     }
-
-    return count;
+    
+    return time;
 }
 
