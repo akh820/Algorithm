@@ -50,19 +50,13 @@ function solution(str1, str2) {
             }
         }
     }
-    //[FR, RA, AN, NC, CE]
-    //[FR, RE, EN, NC, CH]
     let intersect = intersectList.length
     let union = (copyA.length) + copyB.length;
-    // console.log(intersect);
-    // console.log(union);
     
     function checkAlphabet(index, string){
         let element = string[index].toLowerCase();
         let test = element.charCodeAt(0);
         return (test >= 97 && test <= 123)
     }
-    // console.log(copyA);
-    // console.log(copyB);// 더 간결한 수정안
     return union === 0 ? 65536 : Math.floor(intersect / union * 65536);
 }
