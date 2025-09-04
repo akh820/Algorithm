@@ -1,46 +1,17 @@
-function solution(s) {
-    
-    let min = s.length;
-    for(let i = 1; i < s.length; i++){
-        const map = new Map();
-        let start = 0;
-        let end = i;
-        let string = "";
-        while(true){
-            if(end > s.length){
-                const [key, value] = map.entries().next().value;
-                if(value <= 1){
-                        string += key;
-                    } else {
-                        string += `${value}${key}`;
-                    }
-                string += s.slice(start, s.length);
-                break;
-            }
-            const repeat = s.slice(start, end);
-            
-            if(map.size > 0){
-                const [key, value] = map.entries().next().value; // 0이 key, 1이 value
-                
-                if(repeat !== key){
-                    if(value <= 1){
-                        string += key;
-                    } else {
-                        string += `${value}${key}`;
-                    }
-                    map.delete(key);
-                    map.set(repeat, 1);
-                } else {
-                    map.set(repeat, map.get(repeat) + 1)
-                }
-            } else {
-                map.set(repeat, 1)
-            }
-            start += i;
-            end += i;
-        }
-        min = Math.min(min, string.length);
-    }
-    
-    return min
-}
+const solution = s => {
+  const range = [...Array(s.length)].map((_, i) => i + 1);
+  return Math.min(...range.map(i => compress(s, i).length));
+};
+
+const compress = (s, n) => {
+  const make = ([a, l, c]) => `${a}${c > 1 ? c : ''}${l}`;
+  return make(
+    chunk(s, n).reduce(
+      ([a, l, c], e) => e === l ? [a, l, c + 1] : [make([a, l, c]), e, 1],
+      ['', '', 0]
+    )
+  );
+};
+
+const chunk = (s, n) =>
+  s.length <= n ? [s] : [s.slice(0, n), ...chunk(s.slice(n), n)];
