@@ -2,11 +2,6 @@ function solution(p) {
     
     if(p.length === 0) return p;
     
-    // console.log("u = ",u);
-    // console.log("v = ",v);
-    
-    // divide(p);
-    
    function divide(arr){ // 1.arr가 ))((() 일때
         if(arr.length === 0) return "";
         let empty = "";
@@ -25,9 +20,7 @@ function solution(p) {
                 v = arr.slice(i+1, arr.length);
                 break;
             }
-        }// 1. u = ))(( , v = ()
-        // console.log("u =",u);
-        // console.log("v =",v);
+        }
         if(correctBracket(u)){
             return u += divide(v); // 1. u = () + 
         } else {
