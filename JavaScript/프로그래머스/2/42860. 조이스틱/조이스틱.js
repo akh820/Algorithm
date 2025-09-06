@@ -1,30 +1,26 @@
-function solution(name) {
-    
+function solution(name){
     let upDownCount = 0;
-    
     for(const e of name){
         upDownCount += upDown(e);
     }
     
-    let minMove = name.length - 1;
+    let leftRightMin = name.length;
+    
     for(let i = 0 ; i < name.length; i++){
-        let nextIndex = i + 1;
-        while(nextIndex < name.length && name[nextIndex] === "A"){
-            nextIndex++;
+        let currentIndex = i + 1;
+        while(currentIndex < name.length && name[currentIndex] === "A"){
+            currentIndex++;
         }
-        
-        const goRightThenTurn = (i * 2) + (name.length - nextIndex);
-        const goLeftThenTurn = (name.length - nextIndex) * 2 + i;
-        
-        minMove = Math.min(goRightThenTurn, goLeftThenTurn, minMove);
+                
+        const goRightThenTurnLeft = (i * 2) + (name.length - currentIndex);
+        const goLeftThenTurnRight = (name.length - currentIndex) * 2 + i;
+        leftRightMin = Math.min(goRightThenTurnLeft,goLeftThenTurnRight,leftRightMin);
     }
     
-    
-    function upDown(alphabet){
-        const code = alphabet.charCodeAt(0);
-        return Math.min(code - 65, 91 - code);
-    }
-        
-    return upDownCount + minMove;
-    
+    return upDownCount + leftRightMin;
+}
+
+function upDown(alphabet){
+    const code = alphabet.charCodeAt(0);
+    return Math.min(code - 65, 91 - code);
 }
