@@ -1,15 +1,18 @@
 function solution(number, k) {
-  const stack = [];
-
-  for (let i = 0; i < number.length; i++) {
-    while (stack.length > 0 && k > 0 && number[i] > stack[stack.length - 1]) {
-        stack.pop();
-        k--;
+    //1924
+    const stack = [];
+    for(let i = 0 ; i < number.length; i++){
+        const num = number[i];
+        if(stack.length === 0){
+            stack.push(num);
+        } else {
+            while(stack[stack.length-1] < num && k > 0){
+                stack.pop();
+                k--;
+            }
+            stack.push(num);
+        }
     }
-    stack.push(number[i]);
-  }
-
-  stack.splice(number.length - k, k);
-
-  return stack.join("");
+    stack.splice(stack.length - k,k);
+    return stack.join("");
 }
