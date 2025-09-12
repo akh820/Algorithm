@@ -1,33 +1,34 @@
 function solution(n, costs) {
     costs.sort((a,b) => a[2] - b[2]);
     
-    const rootNode = Array.from({length : n }, (_,i) => i);
+    const rootNodes = Array.from({length : n}, (_,i) => i);
     
-    const findRoot = (e) => {
-        if(rootNode[e] === e){
-            return e; // 루토노드가 자기 자신
+    //[[0,1,1],[0,2,2],[1,2,5],[1,3,1],[2,3,8]]
+    // 3의 부모 2
+    // 2의 부모 1
+    // 1의 부모 0
+    const findRootNode = (i) => {
+        if(rootNodes[i] === i) {
+            return i;
         }
-        return rootNode[e] = findRoot(rootNode[e]);
+        return rootNodes[i] = findRootNode(rootNodes[i]);
     }
     
-    const unionRoot = (a, b) => {
-        const rootA = findRoot(a);
-        const rootB = findRoot(b);
+    const unionRoots = (a,b) => {
+        const rootA = findRootNode(a); // 0
+        const rootB = findRootNode(b); // 1
         
         if(rootA !== rootB){
-            rootNode[rootB] = rootA;
+            rootNodes[rootB] = rootA;
             return true;
         }
         return false;
     }
-    
-    let totalCost = 0;
-    for(const cost of costs){
-        const [a, b, line] = cost;
-        if(unionRoot(a,b)){
-            totalCost += line;
+    let minCost = 0;
+    for(const [a, b, cost] of costs){
+        if(unionRoots(a,b)){
+            minCost += cost;
         }
     }
-    
-    return totalCost;
+    return minCost;
 }
