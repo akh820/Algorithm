@@ -12,11 +12,9 @@ function solution(n, computers) {
             }
             if(arr[j] === 1 && visited[j] === false){
                 visited[j] = true;
-                check(computers[j],i,visited);   //j가 1일때, check([1,1,0],0,[t,t,f])
+                check(computers[j],i,visited);
             }
-            // console.log("i =",i, "j =", j, visited);
         }
-        // console.log(set);
         return visited
     }
     
