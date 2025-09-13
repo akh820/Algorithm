@@ -1,22 +1,23 @@
 function solution(n, computers) {
-    const set = new Set();
-    computers.forEach((computer,i) => {
-        const visited = new Array(n).fill(false);
-        set.add(check(computer, i, visited).join(""));
-    })
+    const visited = new Array(n).fill(false);
+    let network = 0;
     
-    function check(arr, i, visited){ // arr 가 [1,1,0] 이라고 가정
-        for(let j = 0 ; j < arr.length; j++){
-            if(j === i){ // 같으면 무조건 1
-                visited[j] = true;
-            }
-            if(arr[j] === 1 && visited[j] === false){
-                visited[j] = true;
-                check(computers[j],i,visited);
-            }
+    for(let i = 0 ; i < n ; i ++){
+        if(!visited[i]){
+            network++;
+            dfs(i);
         }
-        return visited
     }
     
-    return set.size;
+    function dfs(startNode) {
+        //방문한곳 방문처리, 연결되있다는 뜻
+        visited[startNode] = true;
+        for(let i = 0 ; i < computers.length; i++){
+            if(computers[startNode][i] === 1 && visited[i] === false){
+                dfs(i);
+            }
+        }
+    }
+    
+    return network;
 }
