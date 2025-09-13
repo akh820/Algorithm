@@ -1,19 +1,19 @@
 function solution(people, limit) {
-    const sortedPeople = people.sort((a,b) => a - b);
+    let left = 0;
+    let right = people.length - 1;
+    let boat = 0;
     
-    let left = 0 ;
-    let right = sortedPeople.length - 1;
-    let count = 0;
+    people.sort((a,b) => a - b);
     
     while(left <= right){
-        if(sortedPeople[left] + sortedPeople[right] <= limit){
+        if(people[left] + people[right] <= limit){
             left++;
             right--;
         } else {
             right--;
         }
-        count++;
+        boat++;
     }
     
-    return count;
+    return boat;
 }
