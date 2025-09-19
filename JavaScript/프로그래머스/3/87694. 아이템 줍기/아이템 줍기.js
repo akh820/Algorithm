@@ -1,67 +1,70 @@
 function solution(rectangle, characterX, characterY, itemX, itemY) {
-    // 정확한 테두리만 걸러내기 위해 2배확장
-    const expandedRects = rectangle.map(([x1, y1, x2, y2]) => [x1*2, y1*2, x2*2, y2*2]);
     
-    const borderPoints = new Set();
-    
-    for(const [x1, y1, x2, y2] of expandedRects) {
-        for(let i = x1; i <= x2; i++) {
-            borderPoints.add(`${i},${y1}`);
-            borderPoints.add(`${i},${y2}`);
+    const expandedSquares = rectangle.map( rec => {
+        const result = [];
+        for(const e of rec){
+            result.push(e * 2);
         }
-        for(let i = y1; i <= y2; i++) {
-            borderPoints.add(`${x1},${i}`);
-            borderPoints.add(`${x2},${i}`);
+        return result;
+    })
+    
+    const linePoint = new Set();
+    for(const [x1,y1,x2,y2] of expandedSquares){
+        for(let i = x1 ; i <= x2; i++){
+            linePoint.add(`${i},${y1}`);
+            linePoint.add(`${i},${y2}`);
+        }
+        for(let i = y1 ; i <= y2; i++){
+            linePoint.add(`${x1},${i}`);
+            linePoint.add(`${x2},${i}`);
         }
     }
     
-    const validPoints = new Set();
-    for(const pointStr of borderPoints) {
-        const [x, y] = pointStr.split(',').map(Number);
+    const outlinePoint = new Set();
+    for(const e of linePoint){
+        const [x, y] = e.split(',').map(Number);
         let isInside = false;
-        
-        for(const [x1, y1, x2, y2] of expandedRects) {
-            if(x > x1 && x < x2 && y > y1 && y < y2) {
+        for(const [x1,y1,x2,y2] of expandedSquares){
+            if(x > x1 && x < x2 && y > y1 && y < y2){
                 isInside = true;
                 break;
             }
         }
-        
-        if(!isInside) {
-            validPoints.add(pointStr);
+        if(isInside === false){
+            outlinePoint.add(`${x},${y}`);
         }
     }
-    
+        
     const visited = new Map();
-    for(const point of validPoints) {
-        visited.set(point, false);
+    for(const e of outlinePoint){
+        visited.set(e, false);
     }
-    
-    const queue = [[characterX * 2, characterY * 2, 0]];
-    const startPoint = `${characterX * 2},${characterY * 2}`;
-    visited.set(startPoint, true);
-    
-    const dx = [-1, 1, 0, 0];
-    const dy = [0, 0, -1, 1];
-    
-    while(queue.length > 0) {
-        const [x, y, distance] = queue.shift();
         
-        if(x === itemX * 2 && y === itemY * 2) {
-            return distance / 2; 
+    const queue = [[characterX * 2, characterY * 2, 0]];
+    visited.set(`${characterX * 2},${characterY * 2}`,true);
+    
+    const dx = [-1,1,0,0];
+    const dy = [0,0,-1,1];
+        
+    while(queue.length > 0){
+        
+        const [x, y, distance] = queue.shift();
+        if( x === itemX * 2 && y === itemY * 2){
+            return distance / 2;
         }
         
-        for(let i = 0; i < 4; i++) {
-            const nextX = x + dx[i];
-            const nextY = y + dy[i];
-            const nextPoint = `${nextX},${nextY}`;
+        for(let i = 0 ; i < 4; i++){
             
-            if(visited.has(nextPoint) && visited.get(nextPoint) === false) {
+            const nx = dx[i] + x;
+            const ny = dy[i] + y;
+            const nextPoint = `${nx},${ny}`;
+            
+            if(visited.has(nextPoint) && visited.get(nextPoint) === false){
                 visited.set(nextPoint, true);
-                queue.push([nextX, nextY, distance + 1]);
+                queue.push([nx,ny, distance + 1]);
             }
         }
     }
-    
-    return -1; 
+        
+    return -1;
 }
