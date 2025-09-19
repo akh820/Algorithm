@@ -1,10 +1,10 @@
 function solution(n, computers) {
     const visited = new Array(n).fill(false);
-    let networkCount = 0;
+    let network = 0;
     
-    for(let i = 0 ; i < n ; i++){
+    for(let i = 0 ; i < n; i++){
         if(!visited[i]){
-            networkCount++;
+            network++;
             dfs(i);
         }
     }
@@ -18,5 +18,6 @@ function solution(n, computers) {
         }
     }
     
-    return networkCount;
+    return network;
+    
 }
