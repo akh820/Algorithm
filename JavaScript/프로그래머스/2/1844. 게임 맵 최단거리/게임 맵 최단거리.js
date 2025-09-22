@@ -1,32 +1,35 @@
 function solution(maps) {
-    const n = maps[0].length;
-    const m = maps.length;
+    /*
+    [
+    [1,0,1,1,1],
+    [1,0,1,0,1],
+    [1,0,1,1,1],
+    [1,1,1,0,1],
+    [0,0,0,0,1]
+    ]	
+    */
+    const dx = [-1,1,0,0];
+    const dy = [0,0,-1,1];
     
-    const dy = [-1,1,0,0];
-    const dx = [0,0,-1,1];
+    const endX = maps[0].length - 1;
+    const endY = maps.length - 1;
     
-    const queue = [[0,0,1]]; 
-    
-    maps[0][0] = 0;
-    
+    const queue = [[0,0,1]]; // 스타트 라인(0,0에서 시작했다고 가정)
     while(queue.length > 0){
-        
-        const [y, x, distance] = queue.shift();
-        if(y === m - 1 && x === n - 1){
+        const [x, y, distance] = queue.shift();
+        if(x === endX && y === endY){
             return distance;
         }
         
-        for(let i = 0 ; i < 4; i++){
-            const ny = y + dy[i];
-            const nx = x + dx[i];
+        for(let i = 0 ; i < 4 ; i++){
+            const nx = dx[i] + x;
+            const ny = dy[i] + y;
             
-            if(ny >= 0 && ny < m && nx >= 0 && nx < n && maps[ny][nx] === 1){
+            if(nx >= 0 && nx <= endX && ny >=0 && ny <= endY && maps[ny][nx] === 1){
                 maps[ny][nx] = 0;
-                queue.push([ny, nx, distance + 1]);
+                queue.push([nx,ny, distance + 1]);
             }
         }
-
     }
-        return -1;
-    
+    return -1;
 }
