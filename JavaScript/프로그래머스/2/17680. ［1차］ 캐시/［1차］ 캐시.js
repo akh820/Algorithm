@@ -1,24 +1,23 @@
 function solution(cacheSize, cities) {
     if(cacheSize === 0) return cities.length * 5;
     
-    const cityMap = new Map();
+    const cache = new Map();
     
     let time = 0;
     
     for(const e of cities){
         const city = e.toUpperCase();
-        const oldestCity = cityMap.keys().next().value;
-        if(cityMap.has(city)){
+        if(cache.has(city)){
             time += 1;
-            cityMap.delete(city);
-            cityMap.set(city, true);
+            cache.delete(city);
         } else {
             time += 5;
-            if(cityMap.size >= cacheSize){
-                cityMap.delete(oldestCity);
+            if(cache.size >= cacheSize){
+                const oldestCache = cache.keys().next().value;
+                cache.delete(oldestCache);
             }
-            cityMap.set(city, true);
         }
+        cache.set(city, true);
     }
     
     return time;
