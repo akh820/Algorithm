@@ -1,5 +1,4 @@
 function solution(stones, k) {
-    
     let left = 1;
     let right = 200000000;
     let answer = 0;
@@ -22,7 +21,6 @@ function solution(stones, k) {
                 break;
             }
         }
-        
         if(canCross){
             answer = mid;
             left = mid + 1;
