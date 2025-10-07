@@ -1,31 +1,31 @@
 function solution(n, costs) {
-    
-    const rootNodeList = Array.from({length : n}, (_,i) => i);
-    
-    costs.sort((a,b) => a[2] - b[2]);
+    const rootNodes = Array.from({length:n}, (_,i) => i);
     
     let min = 0;
     
-    for(const [a, b, cost] of costs){
-        if(connectRoots(a,b)){
-            min += cost;
-        }
-    }    
+    costs.sort((a,b) => a[2] - b[2]);
     
-    function connectRoots(a,b){
-        const rootA = findRootNode(a);
-        const rootB = findRootNode(b);
-        
-        if(!(rootA === rootB)){
-            rootNodeList[rootB] = rootA;
-            return true;
+    for(const [a,b, distance] of costs){
+        if(unionAB(a, b)) {
+            min += distance;
         }
-        return false;
     }
     
-    function findRootNode (e) {
-        if(rootNodeList[e] === e) return e;
-        return rootNodeList[e] = findRootNode(rootNodeList[e]);
+    function findRootNode(node) {
+        if(rootNodes[node] === node) {
+            return node;
+        }
+        return rootNodes[node] = findRootNode(rootNodes[node]);
+    }
+    
+    function unionAB(a, b){
+        const rootA = findRootNode(a);
+        const rootB = findRootNode(b);
+        if(rootA !== rootB){
+            rootNodes[rootB] = rootA;
+            return true
+        }
+        return false;
     }
     
     return min;
