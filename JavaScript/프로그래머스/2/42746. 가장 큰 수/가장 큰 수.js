@@ -1,6 +1,5 @@
 function solution(numbers) {
-    const num = numbers.map(String).sort((a,b) => ( b + a ) - (a + b));
+    const abc = numbers.map(String).sort((a,b) => (b + a) - (a + b));
     
-    return num[0] === "0" ? "0" : num.join("");
+    return abc[0] === "0" ? "0" : abc.join("");
 }
-
