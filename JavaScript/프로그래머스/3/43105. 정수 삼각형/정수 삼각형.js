@@ -1,6 +1,6 @@
 function solution(triangle) {
     for(let i = 1 ; i < triangle.length; i++){
-        for(let j = 0 ; j < triangle[i].length; j++){ //i가 1일때 triangle[i]의길이 2, [3,8]
+        for(let j = 0 ; j < triangle[i].length; j++){
             if(j === 0){
                 triangle[i][j] += triangle[i-1][j]; 
             } else if ( j === triangle[i].length - 1){
