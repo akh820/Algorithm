@@ -1,24 +1,28 @@
 function solution(n, results) {
-    const player = Array.from({length:n + 1}, () => Array(n+1).fill(false));
-    
+    const players = Array.from({length:n + 1}, () => Array(n+1).fill(false));
     for(const [winner, loser] of results){
-        player[winner][loser] = true;
+        players[winner][loser] = true;
     }
-    
     for(let i = 1 ; i <= n; i++){
-        for(let j = 1; j <=n; j++){
-            for(let k = 1; k <=n; k++){ //i는 1 k는 2, j = 5라고 가정
-                if(player[j][i] && player[i][k]){
-                    player[j][k] = true;
+        for(let j = 1 ; j <= n; j++){
+            for(let k = 1 ; k <= n; k++){
+                if(players[j][i] && players[i][k]){
+                    players[j][k] = true;
                 }
             }
         }
     }
+    
+//     let index = 0;
+//     for(const e of players){
+//         console.log(index,e);
+//         index++;
+//     }
     let answer = 0;
-    for(let i = 1; i <= n; i++){
-    let count = 0;
-        for(let j = 1; j <= n ; j++){
-            if(player[i][j] || player[j][i]){
+    for(let i = 1; i <= n ; i++){
+        let count = 0;
+        for(let j = 1; j <= n; j++){
+            if(players[i][j] || players[j][i]){
                 count++;
             }
         }
