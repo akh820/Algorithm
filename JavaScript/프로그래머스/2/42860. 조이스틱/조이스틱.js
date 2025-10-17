@@ -6,24 +6,24 @@ function solution(name) {
         upDownCount += upDown(e);
     }
     
-    let leftRightCount = name.length - 1; //일렬로 가는것을 최소값으로 계산
+    let leftRightCount = name.length - 1;
     
     for(let i = 0 ; i < name.length; i++){
-        let currentIndex = i + 1;
-        while(currentIndex < name.length && name[currentIndex] === "A"){
-            currentIndex++;
-        } // 건너 띄기
+        let nextIndex = i + 1;
+        while(nextIndex < name.length && name[nextIndex] === "A"){
+            nextIndex++;
+        }
         
-        const goRightThenTurnLeft = i * 2 + (name.length - currentIndex);
-        const goLeftThenTurnRight = (name.length - currentIndex) * 2 + i;
+        let goRightThenTurnLeft = (i * 2) + (name.length - nextIndex);
+        let goLeftThenTurnRight = (i) + (name.length - nextIndex) * 2;
         
-        leftRightCount = Math.min(goRightThenTurnLeft, goLeftThenTurnRight, leftRightCount);
+        leftRightCount = Math.min(leftRightCount, goRightThenTurnLeft, goLeftThenTurnRight);
         
-    }
-    
-    function upDown(alphabet){
-        const a = alphabet.charCodeAt(0);
-        return Math.min( a - 65, 91 - a);
     }
     return upDownCount + leftRightCount;
+}
+
+function upDown(alphabet){
+    const asc = alphabet.charCodeAt(0);
+    return Math.min(asc - 65, 91 - asc);
 }
