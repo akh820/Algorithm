@@ -1,5 +1,4 @@
 function solution(numbers) {
-    const abc = numbers.map(String).sort((a,b) => (b + a) - (a + b));
-    
-    return abc[0] === "0" ? "0" : abc.join("");
+    const temp = numbers.map(String).sort((a,b) => (b+a) - (a+b));
+    return temp[0] === "0" ? "0" : temp.join("");
 }
