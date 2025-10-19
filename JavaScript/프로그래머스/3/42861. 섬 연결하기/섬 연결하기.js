@@ -17,7 +17,7 @@ function solution(n, costs) {
             return e;
         }
         
-        return nodes[e] = findRoot(nodes[e]);
+        return findRoot(e) = findRoot(nodes[e]);
     }
     
     function unionAB(a, b) {
