@@ -1,15 +1,12 @@
 function solution(n) {
-    if(n <= 2){
-        return n;
-    } else {
-        let a = 1;
-        let b = 2;
-        let c;
-        for(let i = 3; i <= n ; i++){
-            c = (a + b) % 1000000007;
-            a = b;
-            b = c;
-        }
-        return c;
+    let first = 0;
+    let second = 1;
+    let now;
+    if(n <= 1) return n;
+    for(let i = 0; i < n ; i++){ // n이 2일때
+        now = (first + second) % 1000000007; // now = 1,2,3,5
+        first = second; // first = 1,1,2,3
+        second = now; // second = 1,2,3,5
     }
+    return now ;
 }
