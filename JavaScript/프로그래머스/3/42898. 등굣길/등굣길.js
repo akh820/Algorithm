@@ -1,24 +1,27 @@
-function solution(m, n, puddles) {
-    const constant = 1000000007;
-    const rootMap = Array.from({length:n+1}, () => Array(m+1).fill(0));
-    //m => y , n => x
-    for(const [x,y] of puddles){
-        rootMap[y][x] = -1;
+function solution(m, n, puddles) { // m 가로, n 세로
+    const road = Array.from({length: n + 1}, () => Array(m+1).fill(0));
+    for(const [y, x] of puddles){
+        road[x][y] = -1;
     }
-    rootMap[1][1] = 1;
-    for(let y = 1 ; y <= n; y++){
-        for(let x = 1; x <= m; x++){
-            if(rootMap[y][x] === -1){
-                rootMap[y][x] = 0;
+    for(let i = 1; i <= n ; i++){
+        for(let j = 1; j <=m ; j++){
+            if(i === 1 && j === 1){
+                road[i][j] = 1;
+            }
+            if(road[i][j] === -1){
+                road[i][j] = 0;
                 continue;
             }
-            if(x > 1){
-                rootMap[y][x] += (rootMap[y][x-1] % constant);
+            if(j > 1){
+                road[i][j] += road[i][j-1] % 1000000007;   
             }
-            if(y > 1){
-                rootMap[y][x] += (rootMap[y-1][x] % constant);
+            if(i > 1){
+                road[i][j] += road[i-1][j] % 1000000007;
             }
         }
     }
-    return rootMap[n][m] % constant;
+    // for(const e of road){
+    //     console.log(e.toString());
+    // }
+    return road[n][m] % 1000000007;
 }
