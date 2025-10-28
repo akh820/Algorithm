@@ -1,19 +1,24 @@
 function solution(k, dungeons) {
-    let maxClearDungeon = 0;
-    const visited = new Array(dungeons.length).fill(false);
+        
+    const N = dungeons.length;
     
-    const dfs = (currentFatigue, clearCount) => {
-        maxClearDungeon = Math.max(maxClearDungeon, clearCount); 
-        for (let i = 0; i < dungeons.length; i++) {
-            const [minRequired, cost] = dungeons[i];
-            if (!visited[i] && currentFatigue >= minRequired) {
-                visited[i] = true; 
-                dfs(currentFatigue - cost, clearCount + 1);
-                visited[i] = false; 
+    const isVisited = Array(N).fill(false);
+    
+    let max = 0;
+    
+    dfs(k, 0);
+    
+    function dfs(currentFatigue, clearCount){
+        max = Math.max(max, clearCount);
+        for(let i = 0 ; i < N ; i++){
+            const [required, usedFatigue] = dungeons[i];
+            if(isVisited[i] === false && currentFatigue >= required){
+                isVisited[i] = true;
+                dfs(currentFatigue - usedFatigue, clearCount + 1);
+                isVisited[i] = false;
             }
         }
     }
-    dfs(k, 0);
-
-    return maxClearDungeon;
+    
+    return max;
 }
