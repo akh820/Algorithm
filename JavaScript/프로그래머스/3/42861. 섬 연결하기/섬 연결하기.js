@@ -1,36 +1,32 @@
 function solution(n, costs) {
     
+    const roots = Array.from({length:n + 1} , (_,i) => i);
+    
     costs.sort((a,b) => a[2] - b[2]);
     
-    const nodes = Array.from({length: n + 1}, (_,i) => i);
-    
-    let total = 0;
-    
+    let totalCost = 0;
     for(const [start, end, cost] of costs){
-        if(!unionAB(start,end)){
-            total += cost;
-        }
+        if(unionAB(start,end)){
+            totalCost += cost;
+        };
     }
     
-    function findRoot(e) {
-        if(nodes[e] === e){
+    function findRoot(e){
+        if(roots[e] === e){
             return e;
         }
-        
-        return findRoot(e) = findRoot(nodes[e]);
+        return roots[e] = findRoot(roots[e]);
     }
     
-    function unionAB(a, b) {
+    function unionAB(a,b){
         const rootA = findRoot(a);
         const rootB = findRoot(b);
         
         if(rootA !== rootB){
-            nodes[rootB] = rootA;
-            return false;
+            roots[rootB] = rootA;
+            return true;
         }
-        
-        return true; //결합할 필요가없음
+        return false;
     }
-    
-    return total;
+    return totalCost;
 }
