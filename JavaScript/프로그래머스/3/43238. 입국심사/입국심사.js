@@ -1,19 +1,20 @@
 function solution(n, times) {
     
-    let nBigInt = BigInt(n);
+    const N = BigInt(n);
     
-    let left = 1n;
-    let right = nBigInt * BigInt(Math.max(...times));
+    let left = 1n; // 입국의 최소 시간
+    let right = N * 1000000000n;
     
     let answer = right;
     
     while(left <= right){
-        const mid = (left + right) / 2n;
         let count = 0n;
-        for(const time of times){
-            count += mid / BigInt(time);
+        const mid = (left + right) / 2n;
+        for(const e of times){
+            count += (mid / BigInt(e));
         }
-        if(count >= n){
+        if(count >= N){ // 더 줄일 수 있나 확인
+            // console.log(count, n);
             answer = mid;
             right = mid - 1n;
         } else {
@@ -21,5 +22,5 @@ function solution(n, times) {
         }
     }
     
-    return BigInt(answer);
+    return answer;
 }
