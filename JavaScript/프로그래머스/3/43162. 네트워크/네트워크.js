@@ -1,7 +1,8 @@
 function solution(n, computers) {
     const N = computers.length;
     
-const isVisited = Array(n).fill(false);    
+    const isVisited = Array.from({length: n} , () => Array(n).fill(false));
+    
     let networkCount = 0;
     
     for(let i = 0 ; i < N ; i++){
